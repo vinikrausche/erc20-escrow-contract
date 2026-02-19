@@ -45,7 +45,10 @@ contract ERC20Escrow is
     event Refunded(bytes32 indexed dealId, address to, uint256 amount);
     event Cancelled(bytes32 indexed dealId);
 
-    constructor() { _disableInitializers(); }
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
 
     function initialize(address admin) public initializer {
         require(admin != address(0), "Admin cannot be zero address");

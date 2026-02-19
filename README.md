@@ -125,6 +125,43 @@ This prints:
 - proxy address
 - implementation address
 
+## How deploy accounts work
+
+`scripts/deploy.js` uses:
+
+```js
+const [deployer, admin] = await ethers.getSigners();
+```
+
+For `localhost` deploy (`npm run deploy:proxy:localhost`):
+
+- Hardhat provides test accounts automatically.
+- You do not need to manually provide wallet private keys.
+- The first signer is used as `deployer`, and the second as `admin`.
+
+For public network deploy (for example, Sepolia):
+
+- You must configure wallet(s) in `hardhat.config.js` with `accounts`.
+- Usually this comes from `.env` values such as `PRIVATE_KEY`.
+
+Example:
+
+```js
+require("dotenv").config();
+
+module.exports = {
+  solidity: "0.8.24",
+  networks: {
+    sepolia: {
+      url: process.env.SEPOLIA_RPC_URL,
+      accounts: [process.env.PRIVATE_KEY]
+    }
+  }
+};
+```
+
+In this case, `ethers.getSigners()` uses the configured `accounts` for that network.
+
 ## Upgrade proxy locally
 
 Set your proxy address and run:
@@ -148,6 +185,13 @@ Each file is named `<functionName>Test.js` and validates one function:
 - `scripts/tests/releaseTest.js`
 - `scripts/tests/refundTest.js`
 - `scripts/tests/cancelTest.js`
+
+About `admin`, `payer`, `payee` in script tests:
+
+- They come from `ethers.getSigners()` in `scripts/tests/_shared.js`.
+- `deployBaseFixture()` maps accounts like:
+  `const [deployer, admin, payer, payee, arbiter, outsider] = await ethers.getSigners();`
+- On local Hardhat tests, these are automatic test accounts (same idea as local deploy).
 
 Run all script tests:
 
