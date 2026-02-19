@@ -1,0 +1,34 @@
+{
+  "name": "erc20-escrow-contract",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Hardhat boilerplate for ERC20 escrow contracts",
+  "scripts": {
+    "clean": "hardhat clean",
+    "compile": "hardhat compile",
+    "test": "npm run test:scripts",
+    "test:hardhat": "hardhat test",
+    "test:initialize": "hardhat run scripts/tests/initializeTest.js",
+    "test:pause": "hardhat run scripts/tests/pauseTest.js",
+    "test:unpause": "hardhat run scripts/tests/unpauseTest.js",
+    "test:createDeal": "hardhat run scripts/tests/createDealTest.js",
+    "test:deposit": "hardhat run scripts/tests/depositTest.js",
+    "test:dispute": "hardhat run scripts/tests/disputeTest.js",
+    "test:release": "hardhat run scripts/tests/releaseTest.js",
+    "test:refund": "hardhat run scripts/tests/refundTest.js",
+    "test:cancel": "hardhat run scripts/tests/cancelTest.js",
+    "test:scripts": "npm run test:initialize && npm run test:pause && npm run test:unpause && npm run test:createDeal && npm run test:deposit && npm run test:dispute && npm run test:release && npm run test:refund && npm run test:cancel",
+    "node": "hardhat node",
+    "deploy:localhost": "npm run deploy:proxy:localhost",
+    "deploy:proxy:localhost": "hardhat run scripts/deploy.js --network localhost",
+    "upgrade:proxy:localhost": "hardhat run scripts/upgradeProxy.js --network localhost"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.0.2",
+    "@openzeppelin/contracts-upgradeable": "^5.0.2",
+    "@openzeppelin/hardhat-upgrades": "^3.9.1",
+    "hardhat": "^2.22.0"
+  }
+}
